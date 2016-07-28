@@ -74,11 +74,11 @@ def split_reads(reads, ref_reads, alt_reads):
             phase_set.discard(None)
             if len(phase_set) == 1:
                 read_phase = phase_set.pop()
-                if read_phase == 1:
+                if read_phase == -1:
                     ref_bam.write(read)
                     ref_bam.write(prev_read)
                     read_results["ref_read"]+=1
-                elif read_phase == -1:
+                elif read_phase == 1:
                     alt_bam.write(read)
                     alt_bam.write(prev_read)
                     read_results["alt_read"]+=1
