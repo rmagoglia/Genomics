@@ -4,6 +4,8 @@ splitSpeciesReads.py
 Designed to separate reads from the two species in hybrid data.
 Adapted from GetGeneASEbyReads.py by Peter Combs.
 
+NOTE: Input bam files MUST be sorted by mate-pair.
+
 Last edit: 07.27.2016
 
 """
