@@ -53,14 +53,14 @@ def convert_chroms(chrom_dict, input_file, output_file):
 
     with open(input_file, 'r') as inFile:
         for line in inFile:
-            chrom = line.strip().split()[0]
-            fields = line.strip().split()[1:]
+            chrom = line.strip().split('\t')[0]
+            fields = line.strip().split('\t')[1:]
             if chrom in chrom_dict:
                 newChrom = chrom_dict[chrom]
 
                 outlist = [newChrom] + fields
-                output = '\t'.join(outlist) + '\n'
-                out.write(output)
+                output = '\t'.join(outlist)
+                out.write(output + '\n')
                 converted += 1
             else:
                 unconverted +=1
@@ -76,14 +76,14 @@ if __name__ == "__main__":
     parser = argparse.ArgumentParser()
 
     parser.add_argument("input_file", help="File which needs name conversion, "
-        "chromosome names must be the first column, must be space delimited.")
+        "chromosome names must be the first column, must be tab delimited.")
     parser.add_argument("output_file", help="File with converted names.")
     parser.add_argument("chromosomes_file", help="File containing refseq and "
-        "ensmbl chromosome names. E.g. NC_000001.11     1")
+        "ensembl chromosome names. E.g. NC_000001.11     1")
     parser.add_argument("-a", "--input_format", default="refseq", 
-        dest="input_format", help="Chromosome format of input file.")
+        dest="input_format", help="Chromosome format of input file. Default: refseq")
     parser.add_argument("-b", "--output_format", default="ensembl", 
-        dest="output_format", help="Chromosome format of output file.")
+        dest="output_format", help="Chromosome format of output file. Default: ensembl")
 
     options = parser.parse_args()
 
