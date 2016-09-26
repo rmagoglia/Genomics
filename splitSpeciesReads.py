@@ -101,10 +101,10 @@ def split_reads(reads, ref_reads, alt_reads):
 
 def parse_args():
     parser = ArgumentParser()
-    parser.add_argument('snp_file')
-    parser.add_argument('reads', type=Samfile)
-    parser.add_argument('ref_reads')
-    parser.add_argument('alt_reads')
+    parser.add_argument('snp_file', help="Tab delimited text file of known SNPs with 4 columns: chrom, 0-position, 1-position, ref_allele|alt_allele")
+    parser.add_argument('reads', type=Samfile, help="BAM file that needs splitting")
+    parser.add_argument('ref_reads', help="Output BAM file of reference reads.")
+    parser.add_argument('alt_reads', help="Output BAM file of alternate reads.")
 
     args = parser.parse_args()
     return args
