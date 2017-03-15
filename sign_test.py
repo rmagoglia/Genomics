@@ -2,9 +2,9 @@
 
 import scipy.stats as stats
 import sys
-CUTOFF = 150
 
-ase, categories, outfile = sys.argv[1:]
+ase, categories, outfile, cutoff = sys.argv[1:]
+CUTOFF = int(cutoff)
 
 top_genes = []
 top_values = []
@@ -12,6 +12,7 @@ bottom_genes = []
 bottom_values = []
 
 with open(ase, 'r') as ase:
+	ase.readline()
 	ase.readline()
 
 	counter = 0
@@ -45,7 +46,10 @@ with open(ase, 'r') as ase:
 
 		counter += 1
 
+
 out = open(outfile, 'w')
+
+tests = 0
 
 with open(categories, 'r') as categories:
 	for line in categories:
@@ -69,9 +73,17 @@ with open(categories, 'r') as categories:
 			else:
 				bottom_no += 1
 
-		oddsratio, pvalue = stats.fisher_exact([[bottom_yes, top_yes], [bottom_no, top_no]])
-		outlist = [category, str(oddsratio), str(pvalue)]
-		output = '\t'.join(outlist)
-		out.write(output + '\n')
+		if bottom_yes + top_yes >= 20:
+			tests += 1
+			oddsratio, pvalue = stats.fisher_exact([[bottom_yes, top_yes], [bottom_no, top_no]])
+			outlist = [category, str(oddsratio), str(pvalue)]
+			output = '\t'.join(outlist)
+			out.write(output + '\n')
 
 out.close()	
+
+if tests > 0:
+	print("Total number of tests: " + str(tests))
+	print("Adjusted significance level: " + str(0.05 / tests))
+else:
+	print("Not enough genes tested.")
