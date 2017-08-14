@@ -75,7 +75,7 @@ for(i in levels(dataPos$chrom)){
   
   top = bonf
   if(max(-log10(stats[which(dataPos$chrom==i)]), na.rm=TRUE)> bonf){
-    top=max(-log10(stats[which(dataPos$chrom==i)]))
+    top=max(-log10(stats[which(dataPos$chrom==i)]), na.rm=TRUE)
   }
   
   plot(-log10(stats[which(dataPos$chrom==i)]), col=dataPos$chrom, main=paste("Significant deviation from background in sliding window of", window, "genes\n(Wilcoxon Rank Sum Test)"), ylab="-Log10(p-value)", xaxt='n', xlab="Genomic Position", ylim=c(0, top+1), pch=20,cex=.5)
