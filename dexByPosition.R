@@ -41,8 +41,6 @@ for(i in seq(1, length(dataA$ref_counts))){
   }
 }
 
-print(length(dex))
-print(length(dataBPos$alt_counts))
 
 mediansd = c()
 averagesd = c()
